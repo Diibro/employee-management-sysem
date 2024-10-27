@@ -6,6 +6,7 @@ import { Employee } from './entities/employee.entity';
 import { QueryFailedError, Repository } from 'typeorm';
 import { AuthService } from 'src/auth/auth.service';
 import { EUserRole } from 'src/util/enums';
+import { EmailSenderService } from 'src/email-sender/email-sender.service';
 
 @Injectable()
 export class EmployeeService {
@@ -13,7 +14,8 @@ export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
     private readonly employeeRepo: Repository<Employee>,
-    private authService: AuthService
+    private authService: AuthService,
+    private emailSender: EmailSenderService
   ){}
   async create(createEmployeeDto: CreateEmployeeDto) {
     try {
@@ -24,6 +26,7 @@ export class EmployeeService {
         const {loginPassword} = createEmployeeDto;
         const newUser = await this.authService.register(email, loginPassword, name, EUserRole.EMPLOYEE);
         if(newUser){
+          await this.emailSender.sendWelcomeEmail(newUser.email, newUser.name)
           return {message: "new employee registered.", data: {savedEmployee}, loginData: {email: savedEmployee.email, password: loginPassword} }
         }
       }
@@ -47,6 +50,15 @@ export class EmployeeService {
     } catch (error) {
       return this.handleDbErrors(error);
     }
+  }
+
+  async findByEmail (email:string, fetchAttendances?:boolean){
+    const employee = await this.employeeRepo.findOne({where: {email}});
+    if(fetchAttendances){
+      const attendances = await employee.attendances;
+      return {employee, attendances};
+    }
+    return employee;
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {

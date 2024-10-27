@@ -10,6 +10,8 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { EmailQueueModule } from './email-queue/email-queue.module';
 import { ReportModule } from './report/report.module';
 import { AuthModule } from './auth/auth.module';
+import { EmailSenderModule } from './email-sender/email-sender.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -28,12 +30,19 @@ import { AuthModule } from './auth/auth.module';
         synchronize: true
       })
     }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost', // Your Redis server host
+        port: 6379,        // Your Redis server port
+      },
+    }),
     UserModule,
     EmployeeModule,
     AttendanceModule,
     EmailQueueModule,
     ReportModule,
     AuthModule,
+    EmailSenderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

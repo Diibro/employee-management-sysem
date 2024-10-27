@@ -1,85 +1,130 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Employee Management System API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a NestJS-based *Employee Management System* that provides functionalities to manage employees, track attendance, generate reports, and more. This API is designed for efficient employee management with secure authentication and authorization.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Project Overview](#project-overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Database Configuration](#database-configuration)
+- [Environment Variables](#environment-variables)
+- [Available API Endpoints](#available-api-endpoints)
+  - [Authentication Routes](#authentication-routes)
+  - [Employee Management Routes](#employee-management-routes)
+  - [Attendance Routes](#attendance-routes)
+  - [Report Generation](#report-generation)
+- [Testing the API](#testing-the-api)
+- [Technologies Used](#technologies-used)
+- [Error Handling](#error-handling)
+- [Event Logging](#event-logging)
+- [Pagination](#pagination)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Project Overview
 
-## Project setup
+The *Employee Management System API* allows for full employee management, including:
 
-```bash
-$ npm install
-```
+- Secure authentication and authorization.
+- CRUD operations for employees.
+- Attendance tracking and management.
+- Report generation in PDF and Excel formats.
+- Comprehensive error handling and logging for maintainable and scalable code.
 
-## Compile and run the project
+## Prerequisites
 
-```bash
-# development
-$ npm run start
+- *Node.js* (v16 or higher)
+- *npm* or *yarn*
+- *PostgreSQL* (or any supported SQL database)
 
-# watch mode
-$ npm run start:dev
+## Installation
 
-# production mode
-$ npm run start:prod
-```
+1. *Clone the repository*:
+   bash
+   git clone https://github.com/your-username/employee-management-system.git
+   cd employee-management-system
+   
 
-## Run tests
+2. *Install dependencies*:
+   bash
+   npm install
+   
 
-```bash
-# unit tests
-$ npm run test
+3. *Set up the environment variables* by creating a .env file in the root directory and adding your configurations.
 
-# e2e tests
-$ npm run test:e2e
+## Database Configuration
 
-# test coverage
-$ npm run test:cov
-```
+The application uses *PostgreSQL* as its database. Ensure your PostgreSQL service is running and the database is properly configured.
 
-## Resources
+## Environment Variables
 
-Check out a few resources that may come in handy when working with NestJS:
+Configure the following variables in your .env file:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+plaintext
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_NAME=employee_management
+JWT_SECRET=your_jwt_secret
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Available API Endpoints
 
-## Stay in touch
+### Authentication Routes
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- *POST /auth/register*: Register a new user.
+- *POST /auth/login*: Login and receive a JWT token.
+- *POST /auth/logout*: Logout the current user.
+- *POST /auth/refresh-token*: Refresh the JWT token.
+
+### Employee Management Routes
+
+- *GET /employees*: Retrieve a list of all employees.
+- *POST /employees*: Add a new employee.
+- *GET /employees/:id*: Get details of a specific employee.
+- *PUT /employees/:id*: Update employee details.
+- *DELETE /employees/:id*: Remove an employee.
+
+### Attendance Routes
+
+- *POST /attendance*: Mark attendance for an employee.
+- *GET /attendance*: Retrieve attendance records.
+- *GET /attendance/:employeeId*: Get attendance for a specific employee.
+
+### Report Generation
+
+- *GET /reports/pdf*: Generate a PDF report of all employee data.
+- *GET /reports/excel*: Generate an Excel report of all employee data.
+
+## Testing the API
+
+The project includes comprehensive tests written in *Jest*. To run the tests:
+
+bash
+npm test
+
+
+## Technologies Used
+
+- *NestJS*: Backend framework.
+- *TypeORM*: Database ORM.
+- *PassportJS*: Authentication.
+- *jsPDF* and *ExcelJS*: PDF and Excel report generation.
+- *Jest*: Unit and integration testing.
+
+## Error Handling
+
+The application provides centralized error handling, ensuring that all API errors are captured and returned in a structured format. Common error types include validation errors, authentication errors, and database-related errors.
+
+## Event Logging
+
+Logs significant events (e.g., user login, logout, data updates) for traceability and debugging. The logging can be customized to capture additional information as needed.
+
+## Pagination
+
+To handle large data sets, the API supports pagination on endpoints like GET /employees to limit the number of results returned at once.
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -22,7 +22,7 @@ export class AuthController {
           if(req.user) return this.authService.login(req.user)
      }
 
-     @UseGuards(LocalAuthGuard)
+     @UseGuards(JwtAuthGuard)
      @Post('logout')
      logout(@Request() req){
           return req.logout();
@@ -32,5 +32,24 @@ export class AuthController {
      @Get('profile')
      getUseInfo(@Request() req){
           return req.user;
+     }
+
+     @Get('forgot-password')
+     forgotPassword(@Query('email') email:string) {
+          return this.authService.getForgetPasswordCode(email);
+     }
+
+
+     @Get('check-reset-code')
+     checkPasswordResetCode(@Query('code') code:number, @Query('email') email:string) {
+          return this.authService.checkResetCode(code, email);
+     }
+
+
+     @UseGuards(JwtAuthGuard)
+     @Post('reset-password')
+     resetPassword (@Body() body:any, @Request() req){
+          const user = req.user;
+          return this.authService.changePassword(user.email, body.password)
      }
 }
